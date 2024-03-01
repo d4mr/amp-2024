@@ -1,5 +1,9 @@
 # amp-2024
-Backtracking algorithm implemented in Golang to solve Jane Street AMP 2024 Puzzle
+Backtracking algorithm implemented in TypeScript, transpiled to Golang (using chatgpt lol) to solve Jane Street AMP 2024 Puzzle.
+
+TS version runs for 10 mins+ and crashes because it runs out of memory. Golang solved it in under a second.
+I only ran the TS code in Bun, so no idea if it's Bun specific, or if my code is garbage. Would love to know though.
+Also how is Go so fast? And why is TS so slow? It's a line by line rewrite pretty much, no clever optimisations involved. The difference is baffling, please open issues with suggestions.
 
 # Puzzle
 Original puzzle available here: https://www.janestreet.com/amp24-puzzle/
