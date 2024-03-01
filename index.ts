@@ -23,14 +23,18 @@ function solveGameBoard() {
   let nextEmptyIndex = gameBoard.indexOf(undefined);
 
   if (nextEmptyIndex === -1) {
-    return gameBoard;
+    console.log(gameBoard);
+    return true;
   }
-  console.log(gameBoard);
+
+  if (nextEmptyIndex === 2) {
+    console.log(gameBoard);
+  }
 
   for (const i of getValidOptions(nextEmptyIndex)) {
     gameBoard[nextEmptyIndex] = i;
-    if (verifyGameBoard()) {
-      solveGameBoard();
+    if (verifyGameBoard() && solveGameBoard()) {
+      return true;
     }
     gameBoard[nextEmptyIndex] = undefined;
   }
@@ -110,16 +114,25 @@ function checkColumnsSkylines() {
     if (skylineDefinitions.n[x]) {
       let currentMax = 0;
       let visibleCount = 0;
+      let emptyCount = 0;
 
       for (let y = 0; y < 6; y++) {
         const cell = gameBoard[x + y * 6];
-        if (cell && cell > currentMax) {
+        if (!cell) {
+          emptyCount++;
+          continue;
+        }
+        if (cell > currentMax) {
           currentMax = cell;
           visibleCount++;
         }
       }
 
-      if (visibleCount > skylineDefinitions.n[x]!) {
+      if (
+        emptyCount > 0
+          ? visibleCount > skylineDefinitions.n[x]!
+          : visibleCount !== skylineDefinitions.n[x]!
+      ) {
         return false;
       }
     }
@@ -127,16 +140,25 @@ function checkColumnsSkylines() {
     if (skylineDefinitions.s[x]) {
       let currentMax = 0;
       let visibleCount = 0;
+      let emptyCount = 0;
 
       for (let y = 5; y >= 0; y--) {
         const cell = gameBoard[x + y * 6];
-        if (cell && cell > currentMax) {
+        if (!cell) {
+          emptyCount++;
+          continue;
+        }
+        if (cell > currentMax) {
           currentMax = cell;
           visibleCount++;
         }
       }
 
-      if (visibleCount > skylineDefinitions.s[x]!) {
+      if (
+        emptyCount > 0
+          ? visibleCount > skylineDefinitions.s[x]!
+          : visibleCount !== skylineDefinitions.s[x]!
+      ) {
         return false;
       }
     }
@@ -150,16 +172,25 @@ function checkRowsSkylines() {
     if (skylineDefinitions.e[y]) {
       let currentMax = 0;
       let visibleCount = 0;
+      let emptyCount = 0;
 
       for (let x = 5; x >= 0; x--) {
         const cell = gameBoard[x + y * 6];
-        if (cell && cell > currentMax) {
+        if (!cell) {
+          emptyCount++;
+          continue;
+        }
+        if (cell > currentMax) {
           currentMax = cell;
           visibleCount++;
         }
       }
 
-      if (visibleCount > skylineDefinitions.e[y]!) {
+      if (
+        emptyCount > 0
+          ? visibleCount > skylineDefinitions.e[y]!
+          : visibleCount !== skylineDefinitions.e[y]!
+      ) {
         return false;
       }
     }
@@ -167,16 +198,26 @@ function checkRowsSkylines() {
     if (skylineDefinitions.w[y]) {
       let currentMax = 0;
       let visibleCount = 0;
+      let emptyCount = 0;
 
       for (let x = 0; x < 6; x++) {
         const cell = gameBoard[x + y * 6];
-        if (cell && cell > currentMax) {
+
+        if (!cell) {
+          emptyCount++;
+          continue;
+        }
+        if (cell > currentMax) {
           currentMax = cell;
           visibleCount++;
         }
       }
 
-      if (visibleCount > skylineDefinitions.w[y]!) {
+      if (
+        emptyCount > 0
+          ? visibleCount > skylineDefinitions.w[y]!
+          : visibleCount !== skylineDefinitions.w[y]!
+      ) {
         return false;
       }
     }
@@ -201,4 +242,5 @@ function checkColumnUnique(x: number) {
   return true;
 }
 
-console.log(solveGameBoard());
+solveGameBoard();
+console.log(gameBoard);
